@@ -6,6 +6,6 @@ pub fn build(b: *std.Build) void {
          .root_source_file = b.path("zig-src/main.zig"),
          .target = b.graph.host
     });
-    exe.linkLibC();
+    // exe.linkLibC();
     b.installArtifact(exe);
 }

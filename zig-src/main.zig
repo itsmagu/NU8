@@ -8,7 +8,7 @@ pub fn main() !void {
     defer file.close(); // Close file on scope exit
 
     // Generate
-    var arena = std.heap.ArenaAllocator.init(std.heap.raw_c_allocator);
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     defer arena.deinit();
     const allocator = arena.allocator();
     const str = "Hellow Guys";
@@ -26,7 +26,7 @@ pub fn main() !void {
         print("{c} - {b}\n", .{memory8B[i],memory8B[i]});
     }
 
-    // Transformat
+// Transformat
     const memory7B = try allocator.alloc(u7, str.len); // size of u7
     print("Arena is {} in size\n", .{arena.queryCapacity()});
     for (0..memory7B.len-1) |i| {
