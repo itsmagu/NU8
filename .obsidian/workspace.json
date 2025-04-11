@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "e1f8e03d9111279d",
+        "id": "e06dafffb65e2323",
         "type": "tabs",
         "children": [
           {
-            "id": "89c47eaebf2a690e",
+            "id": "b0dfa043b95294ba",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "README"
+              "title": "New tab"
             }
           }
         ]
@@ -78,8 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "4598c4d2fdfd886f",
@@ -169,20 +164,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "89c47eaebf2a690e",
+  "active": "f4cfe30f61e6f65a",
   "lastOpenFiles": [
-    "build.zigCKya5s.bck",
-    "build.zigu7YZYf.bck",
-    "build.zigs3u8ss.bck",
-    "build.zigWLFIN1.bck",
-    "build.zigF1voup.bck",
-    "build.zig7690Ir.bck",
-    "build.zigtvritk.bck",
-    "build.zig4Oeffr.bck",
-    "build.zigl2R8ro.bck",
-    "build.zig",
-    "main.exe",
     "README.md",
+    "DECISIONS.md",
+    "zig-src/main.zig66urhw.bck",
+    "zig-src/main.zigWJ1bGn.bck",
+    "zig-src/main.zigdUSeUr.bck",
+    "zig-src/main.zig6oivSz.bck",
+    "zig-src/main.zigR6LTkw.bck",
+    "zig-src/main.zigCKis6I.bck",
+    "zig-src/main.zigUNB1HO.bck",
+    "zig-src/main.zigcdvGlX.bck",
+    "zig-src/main.zigQJ0ju0.bck",
+    "zig-src/main.zigJMiNyJ.bck",
     "Welcome.md"
   ]
 }
