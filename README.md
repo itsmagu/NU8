@@ -1,7 +1,7 @@
 # Not UTF-8
 A library that reads binary files according to my "encoding".
 # Also Not Done yet
-Work in progress...
+Work in progress... If you want to read about the development head into the './docs' folder.
 ## But why
 I trust computer but not software engineers and thus I had a religious moment in the shower where a magic seal told me to create this.
 ## The real why
