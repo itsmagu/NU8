@@ -11,7 +11,7 @@ pub fn main() !void {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     defer arena.deinit();
     const allocator = arena.allocator();
-    const str = "Cool String with upper and lowercase symbols with support for space and newlines aswell as numbers";
+    const str = "This is cool";
     print("\nstr is \"{s}\"\n", .{str});
 
     const memory8B = try allocator.alloc(u8, str.len);
@@ -20,7 +20,7 @@ pub fn main() !void {
 
     // Transformat
     var sets = str.len / 4;
-    if (str.len % 4 != 0 ){
+    if (str.len % 4 != 0) {
         sets += 1;
     }
     const memory6B = try allocator.alloc(Set, sets);
@@ -29,11 +29,11 @@ pub fn main() !void {
 
     // Print
     printB6(memory6B);
-    
+
     // Write file
     const memoryptr: *[]u24 = @ptrCast(@constCast(&memory6B));
     var writer = std.io.bitWriter(.little, file.writer());
-    for (memory6B,0..) |_,i| {
+    for (memory6B, 0..) |_, i| {
         try writer.writeBits(memoryptr.*[i], 24);
     }
     file.close();
@@ -44,6 +44,7 @@ pub fn main() !void {
     readfile.close();
 }
 
+// Our 24 bit type
 const Set = packed struct { pri: u6, duo: u6, tri: u6, tet: u6 };
 
 fn charTob6(in: u8) u6 {
@@ -106,12 +107,13 @@ fn printB6(src: []Set) void {
     }
 }
 
-fn loadB6fromFile(file:std.fs.File,allocator: std.mem.Allocator) ![]Set {
+fn loadB6fromFile(file: std.fs.File, allocator: std.mem.Allocator) ![]Set {
     const stat = try file.stat();
-    print("{}\n", .{stat.size*8});
-    const memory = try allocator.alloc(Set, stat.size/4);
+    print("{} bits in {} bytes\n", .{stat.size * 8,stat.size});
+    const memory = try allocator.alloc(Set, stat.size / 3);
+    print("We will read {} bytes into {} sets\n", .{stat.size,stat.size/3});
     var reader = std.io.bitReader(.little, file.reader());
-    for (memory,0..) |_,i| {
+    for (memory, 0..) |_, i| {
         const bits = try reader.readBitsNoEof(u24, 24);
         print("{b}\n", .{bits});
         const sets: *Set = @ptrCast(@constCast(&bits));
