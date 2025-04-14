@@ -6,13 +6,12 @@ const mem = std.mem;
 pub fn main() !void {
     // Open
     var file = try std.fs.cwd().createFile("output", .{});
-    defer file.close(); // Close file on scope exit
 
     // Generate
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
     defer arena.deinit();
     const allocator = arena.allocator();
-    const str = "This is a very long and cool string";
+    const str = "Cool String with upper and lowercase symbols with support for space and newlines aswell as numbers";
     print("\nstr is \"{s}\"\n", .{str});
 
     const memory8B = try allocator.alloc(u8, str.len);
@@ -20,7 +19,6 @@ pub fn main() !void {
     @memcpy(memory8B, str);
 
     // Transformat
-    
     var sets = str.len / 4;
     if (str.len % 4 != 0 ){
         sets += 1;
@@ -31,9 +29,19 @@ pub fn main() !void {
 
     // Print
     printB6(memory6B);
-
-    // Write
-    try file.writeAll(memory8B);
+    
+    // Write file
+    const memoryptr: *[]u24 = @ptrCast(@constCast(&memory6B));
+    var writer = std.io.bitWriter(.little, file.writer());
+    for (memory6B,0..) |_,i| {
+        try writer.writeBits(memoryptr.*[i], 24);
+    }
+    file.close();
+    // Read file
+    const readfile = try std.fs.cwd().openFile("output", .{});
+    const newmem6B = try loadB6fromFile(readfile, allocator);
+    printB6(newmem6B);
+    readfile.close();
 }
 
 const Set = packed struct { pri: u6, duo: u6, tri: u6, tet: u6 };
@@ -96,4 +104,18 @@ fn printB6(src: []Set) void {
     for (0..src.len) |i| {
         print("{b} {b} {b} {b} = {c} {c} {c} {c}\n", .{ src[i].pri, src[i].duo, src[i].tri, src[i].tet, b6ToChar(src[i].pri), b6ToChar(src[i].duo), b6ToChar(src[i].tri), b6ToChar(src[i].tet) });
     }
+}
+
+fn loadB6fromFile(file:std.fs.File,allocator: std.mem.Allocator) ![]Set {
+    const stat = try file.stat();
+    print("{}\n", .{stat.size*8});
+    const memory = try allocator.alloc(Set, stat.size/4);
+    var reader = std.io.bitReader(.little, file.reader());
+    for (memory,0..) |_,i| {
+        const bits = try reader.readBitsNoEof(u24, 24);
+        print("{b}\n", .{bits});
+        const sets: *Set = @ptrCast(@constCast(&bits));
+        memory[i] = sets.*;
+    }
+    return memory;
 }
