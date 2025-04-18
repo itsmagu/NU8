@@ -5,7 +5,8 @@ Thus I have decided to include a small set of formats that will be selectable vi
 - 6bit for 64 characters with a-z, A-Z, 0-9 and 2 special (space and newline).
 - 6bitExt for 64 characters with a-z, 0-9, 27 special and a uppercase toggle.
 - 5bit for 32 characters with a-z, 5 special and a uppercase toggle.
-- 4bit for 7-28 characters with a-z and 2 special with the 4th bit used to request the next 4 bits.
+- 4bit for 16 characters with 0-9 and 6 special characters.
+- 4bitExt for 8-28 characters with a-z and 2 special with the 4th bit used to request the next 4 bits.
 - 3bit for a non-exhaustive scale of 0-100 represented with numbers from 0 to 8.
 This selected might change but I could see a use for them all, even 3bits could be used to store compressed raw textures.
 ### Store which encoding is used

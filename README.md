@@ -1,3 +1,4 @@
+![](img/format.png)
 # Not UTF-8
 A library that reads binary files according to my "encoding".
 # Also Not Done yet

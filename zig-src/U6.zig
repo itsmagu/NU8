@@ -6,22 +6,24 @@ pub const Set = packed struct { pri: u6, duo: u6, tri: u6, tet: u6 };
 
 pub fn charTob6(in: u8) u6 {
     return switch (in) {
-        48...57 => @intCast(in + 5),
-        65...90 => @intCast(in - 65),
-        97...122 => @intCast((in - 71)),
-        32 => 62,
-        10 => 63,
-        else => 23,
+        97...122 => @intCast(in - 96),
+        65...90 => @intCast((in - 32)),
+        48...52 => @intCast(in - 21),
+        53...57 => @intCast(in + 6),
+        32 => 0,
+        10 => 32,
+        else => 0,
     };
 }
 
 pub fn b6ToChar(in: u6) u8 {
     return switch (in) {
-        0...25 => @as(u8, in) + 65,
-        26...51 => @as(u8, in) + 71,
-        52...61 => @as(u8, in) - 4,
-        62 => 32,
-        63 => 10,
+        0 => 32,
+        1...26 => @as(u8, @intCast(in)) + 96,
+        27...31 => @as(u8, @intCast(in)) + 21,
+        32 => 10,
+        33...58 => @as(u8, @intCast(in)) + 32,
+        59...63 => @as(u8, @intCast(in)) - 6,
     };
 }
 
@@ -44,21 +46,21 @@ pub fn b8ToB6(allocator: std.mem.Allocator, src: []u8) []Set {
     switch (reminder) {
         1 => {
             dest[sets].pri = charTob6(src[sets * 4]);
-            dest[sets].duo = 62;
-            dest[sets].tri = 62;
-            dest[sets].tet = 62;
+            dest[sets].duo = 0;
+            dest[sets].tri = 0;
+            dest[sets].tet = 0;
         },
         2 => {
             dest[sets].pri = charTob6(src[sets * 4]);
             dest[sets].duo = charTob6(src[sets * 4 + 1]);
-            dest[sets].tri = 62;
-            dest[sets].tet = 62;
+            dest[sets].tri = 0;
+            dest[sets].tet = 0;
         },
         3 => {
             dest[sets].pri = charTob6(src[sets * 4]);
             dest[sets].duo = charTob6(src[sets * 4 + 1]);
             dest[sets].tri = charTob6(src[sets * 4 + 2]);
-            dest[sets].tet = 62;
+            dest[sets].tet = 0;
         },
         else => {},
     }
