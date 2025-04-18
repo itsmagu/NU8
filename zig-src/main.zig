@@ -22,6 +22,7 @@ pub fn main() !void {
         try U6.writeB6ToFile(mem, file);
         file.close();
     } else if (std.mem.eql(u8, in, "R")) {
+        print("-" ** 20); // Very Python, I like it!
         print("What is the filename we should read in the current work directory?");
         const fileName = try input(allocator);
         if (std.fs.cwd().openFile(fileName, .{})) |file| {
